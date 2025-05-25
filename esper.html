@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulación Educativa del Coito Humano</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #3a3a3a;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        #container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #4a4a4a;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            color: #ffaa44;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        
+        .subtitle {
+            color: #ccc;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        #scene {
+            width: 700px;
+            height: 400px;
+            margin: 20px auto;
+            background-color: #555;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 3px solid #666;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Estilos para Armando (hombre) */
+        #armando {
+            position: absolute;
+            left: 250px;
+            top: 100px;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+        
+        .armando-head {
+            width: 45px;
+            height: 45px;
+            background-color: #222;
+            border-radius: 50%;
+            margin: 0 auto;
+            border: 2px solid #111;
+        }
+        
+        .armando-body {
+            width: 12px;
+            height: 110px;
+            background-color: #222;
+            margin: 0 auto;
+            position: relative;
+            border: 1px solid #111;
+        }
+        
+        .armando-legs {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: -5px;
+        }
+        
+        .armando-leg {
+            width: 12px;
+            height: 90px;
+            background-color: #222;
+            border: 1px solid #111;
+        }
+        
+        /* Estilos para el pene */
+        #penis {
+            position: absolute;
+            width: 90px;
+            height: 18px;
+            background: linear-gradient(to right, #ff9966, #ff7733);
+            border-radius: 10px 0 0 10px;
+            z-index: 8;
+            transform-origin: right center;
+            transform: rotate(-15deg);
+            bottom: 20px;
+            right: -80px;
+            border: 1px solid #cc5522;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        #penis-tip {
+            position: absolute;
+            right: -18px;
+            width: 18px;
+            height: 18px;
+            background-color: #ff5500;
+            border-radius: 0 10px 10px 0;
+            border: 1px solid #cc4400;
+        }
+        
+        /* Estilos para Miguel (mujer en posición de 4) */
+        #miguel {
+            position: absolute;
+            left: 350px;
+            top: 150px;
+            z-index: 5;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .miguel-head {
+            width: 45px;
+            height: 45px;
+            background-color: #fff;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 2px solid #000;
+            position: relative;
+        }
+        
+        .miguel-body-4 {
+            width: 120px;
+            height: 25px;
+            background-color: #fff;
+            margin: 0 auto;
+            border: 2px solid #000;
+            position: relative;
+            border-radius: 5px;
+        }
+        
+        .miguel-legs-4 {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: -75px;
+            width: 100%;
+        }
+        
+        .miguel-leg-4 {
+            width: 18px;
+            height: 90px;
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .miguel-leg-4.front {
+            transform: rotate(25deg);
+            transform-origin: top;
+        }
+        
+        .miguel-leg-4.back {
+            transform: rotate(-25deg);
+            transform-origin: top;
+        }
+        
+        /* Vagina */
+        #vagina {
+            position: absolute;
+            left: 370px;
+            top: 200px;
+            width: 35px;
+            height: 18px;
+            background: linear-gradient(to bottom, #ff99cc, #ff77aa);
+            border-radius: 0 0 20px 20px;
+            z-index: 7;
+            border: 1px solid #cc6699;
+        }
+        
+        /* Etiquetas de nombre */
+        .name-tag {
+            position: absolute;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            z-index: 20;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            padding: 3px 10px;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        #armando-name {
+            top: 50px;
+            left: 260px;
+        }
+        
+        #miguel-name {
+            top: 100px;
+            left: 360px;
+        }
+        
+        /* Botón */
+        #button {
+            background: linear-gradient(to bottom, #ff6600, #cc5500);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 30px;
+            margin: 20px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #button:hover {
+            background: linear-gradient(to bottom, #ff7700, #dd6600);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        #button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        #button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Contador */
+        #counter {
+            font-size: 20px;
+            margin: 15px;
+            color: #ffaa44;
+            font-weight: bold;
+        }
+        
+        /* Información */
+        #info {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff6600;
+        }
+        
+        /* Espermatozoides */
+        .sperm {
+            position: absolute;
+            width: 10px;
+            height: 5px;
+            background-color: white;
+            border-radius: 5px;
+            opacity: 0.9;
+            z-index: 9;
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+        }
+        
+        /* Expresión facial feliz */
+        .happy-face::after {
+            content: "😊";
+            position: absolute;
+            font-size: 30px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Simulación  del Coito a migue</h1>
+        <p class="subtitle">Esta representación tiene fines exclusivamente educativos para ver que miguel me la pela</p>
+        
+        <div id="scene">
+            <!-- Armando (hombre) -->
+            <div id="armando">
+                <div class="armando-head"></div>
+                <div class="armando-body">
+                    <div id="penis">
+                        <div id="penis-tip"></div>
+                    </div>
+                </div>
+                <div class="armando-legs">
+                    <div class="armando-leg"></div>
+                    <div class="armando-leg"></div>
+                </div>
+            </div>
+            
+            <!-- Miguel (mujer en posición de 4) -->
+            <div id="miguel">
+                <div class="miguel-head"></div>
+                <div class="miguel-body-4">
+                    <div class="miguel-legs-4">
+                        <div class="miguel-leg-4 front"></div>
+                        <div class="miguel-leg-4 back"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="vagina"></div>
+            
+            <div id="armando-name" class="name-tag">Armando</div>
+            <div id="miguel-name" class="name-tag">Miguel</div>
+        </div>
+        
+        <button id="button"> PENETRACIÓN</button>
+        <div id="counter">Movimientos: 0/20</div>
+        <div id="info">
+            Presiona el botón repetidamente para simular el movimiento de penetración durante el coito.
+            Después de 20 movimientos, se simulará la eyaculación a miguel
+        </div>
+    </div>
+
+    <script>
+        const button = document.getElementById("button");
+        const armando = document.getElementById("armando");
+        const miguel = document.getElementById("miguel");
+        const penis = document.getElementById("penis");
+        const vagina = document.getElementById("vagina");
+        const counter = document.getElementById("counter");
+        const info = document.getElementById("info");
+        const miguelHead = document.querySelector(".miguel-head");
+        
+        let thrusts = 0;
+        let isThrusting = false;
+        
+        // Inicializar posiciones
+        function initializePositions() {
+            // Posición de Armando (hombre) de pie
+            armando.style.left = "250px";
+            armando.style.top = "100px";
+            
+            // Posición de Miguel (mujer) en 4
+            miguel.style.left = "350px";
+            miguel.style.top = "150px";
+            
+            // Posición del pene (inicialmente fuera)
+            penis.style.bottom = "20px";
+            penis.style.right = "-80px";
+            penis.style.transform = "rotate(-15deg)";
+            
+            // Posición de la vagina
+            vagina.style.left = "370px";
+            vagina.style.top = "200px";
+        }
+        
+        initializePositions();
+        
+        button.addEventListener("click", function() {
+            if (!isThrusting) {
+                isThrusting = true;
+                info.textContent = "Simulando el coito: penetración vaginal";
+                // Posicionar el pene dentro al comenzar
+                penis.style.right = "-20px";
+            }
+            
+            thrusts++;
+            counter.textContent = `Movimientos: ${thrusts}/20`;
+            
+            // Animación de penetración (movimiento de vaivén)
+            if (thrusts % 2 === 0) {
+                // Movimiento hacia adentro
+                penis.style.transform = "rotate(-10deg) translateX(15px)";
+                miguel.style.transform = "translateX(8px) rotate(0deg)";
+            } else {
+                // Movimiento hacia afuera
+                penis.style.transform = "rotate(-20deg) translateX(-8px)";
+                miguel.style.transform = "translateX(-8px) rotate(0deg)";
+            }
+            
+            // Eyaculación después de 20 movimientos
+            if (thrusts === 20) {
+                button.disabled = true;
+                info.textContent = "Eyaculación simulada: liberación de espermatozoides hacia miguel gei";
+                
+                // Simular eyaculación
+                simulateEjaculation();
+                
+                // Miguel "embarazada" - cara feliz
+                setTimeout(() => {
+                    miguelHead.classList.add("happy-face");
+                    info.textContent = "Proceso completo: los espermatozoides se le fueron al miguel por noob y me pela la verga.";
+                }, 2000);
+            }
+        });
+        
+        function simulateEjaculation() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const sperm = document.createElement("div");
+                    sperm.className = "sperm";
+                    sperm.style.left = "370px";
+                    sperm.style.top = "200px";
+                    
+                    // Posición inicial aleatoria cerca de la vagina
+                    const startX = 370 + Math.random() * 10 - 5;
+                    const startY = 200 + Math.random() * 10 - 5;
+                    
+                    // Dirección aleatoria hacia adelante
+                    const angle = Math.random() * Math.PI/3 - Math.PI/6;
+                    const distance = 100 + Math.random() * 50;
+                    
+                    sperm.style.left = startX + "px";
+                    sperm.style.top = startY + "px";
+                    
+                    document.getElementById("scene").appendChild(sperm);
+                    
+                    // Animación
+                    const animation = sperm.animate([
+                        { 
+                            transform: `translate(0, 0)`,
+                            opacity: 0.9 
+                        },
+                        { 
+                            transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`,
+                            opacity: 0 
+                        }
+                    ], {
+                        duration: 800 + Math.random() * 800,
+                        easing: "ease-out"
+                    });
+                    
+                    animation.onfinish = () => sperm.remove();
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
